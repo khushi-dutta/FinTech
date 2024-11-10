@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <style>
+        /* General styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #ffffff;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .auth-buttons button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .auth-buttons button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Main section styles */
+        .main-content {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            color: black;
+            text-align: left;
+            background-image: url('bg.jpg'); /* Replace with your own image */
+            background-size: cover;
+            background-position: center;
+            padding-left: 50px;
+        }
+
+        .left-section {
+            max-width: 600px;
+        }
+
+        /* Typing animation for heading */
+        .animated-heading {
+            font-size: 48px;
+            font-weight: bold;
+            color: black;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid #007bff;
+            animation: typing 3s steps(30, end), blink 0.6s step-end infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        @keyframes typing {
+            0% { width: 0; }
+            50% { width: 100%; }
+            100% { width: 0; }
+        }
+
+        @keyframes blink {
+            from { border-color: transparent; }
+            to { border-color: #007bff; }
+        }
+
+        .description {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* Enhanced Button styles */
+        .buttons button {
+            padding: 15px 30px;
+            margin-right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buttons button::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%) rotate(45deg);
+            transition: all 0.75s ease;
+            opacity: 0;
+        }
+
+        .buttons button:hover::before {
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+        }
+
+        .buttons button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">MyLogo</div>
+        <div class="auth-buttons">
+            <button class="login-btn" onclick="redirectToLogin()">Login</button>
+            <button class="register-btn" onclick="redirectToRegister()">Register</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="left-section">
+            <h1 class="animated-heading" id="animated-heading">Welcome to Our Platform</h1>
+            <p class="description">
+                Join us to explore amazing features and connect with like-minded individuals.
+            </p>
+            <div class="buttons">
+                <button class="login-btn" onclick="redirectToLogin()">Login</button>
+                <button class="register-btn" onclick="redirectToRegister()">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function redirectToLogin() {
+            alert('Redirecting to login page...');
+            // Replace with actual link, e.g., window.location.href = "/login";
+        }
+
+        function redirectToRegister() {
+            alert('Redirecting to register page...');
+            // Replace with actual link, e.g., window.location.href = "/register";
+        }
+
+        // JavaScript to implement the typing effect
+        const heading = document.getElementById("animated-heading");
+        const text = "Welcome to Our Platform";
+        let index = 0;
+        let isDeleting = false;
+
+        function typeEffect() {
+            heading.innerText = text.slice(0, index) + '|';
+
+            if (isDeleting) {
+                index--;
+                if (index === 0) {
+                    isDeleting = false;
+                }
+            } else {
+                index++;
+                if (index === text.length) {
+                    isDeleting = true;
+                }
+            }
+
+            setTimeout(typeEffect, isDeleting ? 100 : 200);
+        }
+
+        document.addEventListener("DOMContentLoaded", typeEffect);
+    </script>
+</body>
+</html>
