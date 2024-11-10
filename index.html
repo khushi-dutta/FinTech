@@ -296,7 +296,7 @@
           <a href="/Contact us/contact.html">Contact Us</a>
         </div>
         <div class="right-side list">
-          <a href="/Login/login.html" class="button">Login/Register</a>
+          <a href="/Login/login.html" class="button">Sign In/Sign Up</a>
         </div>
       </div>
     </nav>
@@ -335,8 +335,10 @@
               ArthManthan is dedicated to transforming your financial knowledge and empowering you to make smarter decisions. With expert insights, innovative tools, and comprehensive resources, we guide you towards building wealth, securing your future, and mastering the world of finance.
           </p>
           <div class="buttons">
-              <button class="login-btn" onclick="redirectToLogin()">Login</button>
-              <button class="register-btn" onclick="redirectToRegister()">Sign Up</button>
+              <button class="login-btn" onclick="window.location.href='/Login/login.html'">Sign In</button>
+
+              <button class="login-btn" onclick="window.location.href='/Login/login.html'">Sihn Up</button>
+
           </div>
       </div>
   </div>
@@ -856,7 +858,7 @@ ScrollReveal().reveal(".testi-container", {
 
   // JavaScript to implement the typing effect
   const heading = document.getElementById("animated-heading");
-  const text = "Welcome to Our Platform";
+  const text = "Welcome to ArthManthan";
   let index = 0;
   let isDeleting = false;
 
