@@ -189,16 +189,16 @@
 
     <script>
         const videos = [
-            { id: 1, title: "Introduction to HTML", coins: 10, completed: false },
-            { id: 2, title: "CSS Basics", coins: 15, completed: false },
-            { id: 3, title: "JavaScript Fundamentals", coins: 20, completed: false },
-            { id: 4, title: "Responsive Web Design", coins: 25, completed: false },
-            { id: 5, title: "Web Accessibility", coins: 30, completed: false },
-            { id: 6, title: "Git Basics", coins: 20, completed: false },
-            { id: 7, title: "React Introduction", coins: 35, completed: false },
-            { id: 8, title: "Node.js Basics", coins: 30, completed: false },
-            { id: 9, title: "Database Fundamentals", coins: 25, completed: false },
-            { id: 10, title: "API Development", coins: 40, completed: false }
+            { id: 1, title: "Introduction to Finance", youtubeId: "3xXUQEvf8v0", coins: 10, completed: false },
+            { id: 2, title: "Stock Market Basics", youtubeId: "0N86U8W7A4c", coins: 15, completed: false },
+            { id: 3, title: "Personal Finance 101", youtubeId: "UcAY6qRHlw0", coins: 20, completed: false },
+            { id: 4, title: "Understanding Cryptocurrency", youtubeId: "rYQgy8QDEBI", coins: 25, completed: false },
+            { id: 5, title: "How to Budget Effectively", youtubeId: "_JBxP_oz2kQ", coins: 30, completed: false },
+            { id: 6, title: "Investing for Beginners", youtubeId: "-APjlRq8Usw", coins: 20, completed: false },
+            { id: 7, title: "Understanding Bonds and Stocks", youtubeId: "ZYArHkBofas", coins: 35, completed: false },
+            { id: 8, title: "Introduction to Real Estate Investing", youtubeId: "_-4FA_b7xGs", coins: 30, completed: false },
+            { id: 9, title: "Credit Score Basics", youtubeId: "YSihe9BEV5Q", coins: 25, completed: false },
+            { id: 10, title: "Financial Independence and Retirement", youtubeId: "TjrsreChnW8", coins: 40, completed: false }
         ];
 
         let totalCoins = 0;
@@ -257,23 +257,31 @@
             const videoList = document.getElementById('videoList');
             videos.forEach(video => {
                 const videoCard = document.createElement('div');
-                videoCard.className = 'video-card';
-                videoCard.innerHTML = `
-                    <h2 class="video-title">${video.title}</h2>
-                    <div class="video-placeholder">Video Placeholder</div>
-                    <p>Earn ${video.coins} coins by completing this lesson</p>
-                    <button 
-                        class="complete-btn" 
-                        data-video-id="${video.id}"
-                        onclick="completeVideo(${video.id})"
-                        ${video.completed ? 'disabled' : ''}>
-                        ${video.completed ? 'Completed! ✓' : 'Mark as Complete'}
-                    </button>
-                `;
+                videoCard.classList.add('video-card');
+
+                const videoTitle = document.createElement('div');
+                videoTitle.classList.add('video-title');
+                videoTitle.textContent = video.title;
+
+                const videoIframe = document.createElement('div');
+                videoIframe.classList.add('video-placeholder');
+                videoIframe.innerHTML = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${video.youtubeId}" frameborder="0" allowfullscreen></iframe>`;
+
+                const completeButton = document.createElement('button');
+                completeButton.classList.add('complete-btn');
+                completeButton.textContent = "Complete Video";
+                completeButton.setAttribute('data-video-id', video.id);
+                completeButton.onclick = () => completeVideo(video.id);
+
+                videoCard.appendChild(videoTitle);
+                videoCard.appendChild(videoIframe);
+                videoCard.appendChild(completeButton);
+
                 videoList.appendChild(videoCard);
             });
         }
 
+        // Initialize page with video cards and progress
         createVideoCards();
         updateProgress();
     </script>
