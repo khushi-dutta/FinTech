@@ -119,6 +119,53 @@
       href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <style>
+      /* Main section styles */
+      .main-content {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            color: black;
+            text-align: left;
+            background-image: url('bg.jpg'); /* Replace with your own image */
+            background-size: cover;
+            background-position: center;
+            padding-left: 50px;
+        }
+
+        .left-section {
+            max-width: 600px;
+        }
+
+        /* Typing animation for heading */
+        .animated-heading {
+            font-size: 48px;
+            font-weight: bold;
+            color: black;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid #007bff;
+            animation: typing 3s steps(30, end), blink 0.6s step-end infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        @keyframes typing {
+            0% { width: 0; }
+            50% { width: 100%; }
+            100% { width: 0; }
+        }
+
+        @keyframes blink {
+            from { border-color: transparent; }
+            to { border-color: #007bff; }
+        }
+
+        .description {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+    </style>
 
   </head>
   <body>
@@ -144,7 +191,7 @@
     </nav>
 
     <main>
-      <section id="home">
+      <!-- <section id="home">
         <div class="container one">
           <div class="content">
             <h1 id="hero"><b>Welcome to GenZSavy</b></h1>
@@ -167,7 +214,23 @@
             <img src="image.png" alt="Photo" />
           </div>
         </div>
-      </section>
+      </section> -->
+
+          <!-- Main Content -->
+    <div class="main-content">
+      <div class="left-section">
+          <h1 class="animated-heading" id="animated-heading">Welcome to Our Platform</h1>
+          <p class="description">
+              Join us to explore amazing features and connect with like-minded individuals.
+          </p>
+          <div class="buttons">
+              <button class="login-btn" onclick="redirectToLogin()">Login</button>
+              <button class="register-btn" onclick="redirectToRegister()">Sign Up</button>
+          </div>
+      </div>
+  </div>
+
+
       <section>
         <div class="ai container three">
           <div class="content">
@@ -644,6 +707,43 @@ ScrollReveal().reveal(".testi-container", {
       sparkle.remove();
     });
   }
+</script>
+<script>
+  function redirectToLogin() {
+      alert('Redirecting to login page...');
+      // Replace with actual link, e.g., window.location.href = "/login";
+  }
+
+  function redirectToRegister() {
+      alert('Redirecting to register page...');
+      // Replace with actual link, e.g., window.location.href = "/register";
+  }
+
+  // JavaScript to implement the typing effect
+  const heading = document.getElementById("animated-heading");
+  const text = "Welcome to Our Platform";
+  let index = 0;
+  let isDeleting = false;
+
+  function typeEffect() {
+      heading.innerText = text.slice(0, index) + '|';
+
+      if (isDeleting) {
+          index--;
+          if (index === 0) {
+              isDeleting = false;
+          }
+      } else {
+          index++;
+          if (index === text.length) {
+              isDeleting = true;
+          }
+      }
+
+      setTimeout(typeEffect, isDeleting ? 100 : 200);
+  }
+
+  document.addEventListener("DOMContentLoaded", typeEffect);
 </script>
 </body>
 </html>
