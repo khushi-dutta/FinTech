@@ -124,16 +124,16 @@ button {
   outline: none;
 }
 .btn {
-  background-color: #005346;
-  background-image: linear-gradient(315deg, #005346 0%, #238f7f 74%);
+  background-color: #4C9AFF;
+  background-image: linear-gradient(315deg, #4C9AFF 0%, rgb(30, 93, 129) 74%);
   line-height: 42px;
   padding: 0;
   border: none;
 }
 .btn:hover {
-  background-color: #005346;
+  background-color: #4C9AFF;
   color: #fff;
-  background-image: linear-gradient(315deg, #228879 0%, #013b33 74%);
+  background-image: linear-gradient(315deg, rgb(30, 93, 129) 0%, #4C9AFF 74%);
 }
 .btn span {
   position: relative;
