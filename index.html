@@ -210,6 +210,72 @@
             font-size: 18px;
             margin-bottom: 30px;
         }
+
+
+
+
+
+        /* .overlay {
+      width: 80%;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    } */
+
+    /* h1 {
+      text-align: center;
+      color: #2d3748;
+      margin-bottom: 2rem;
+      font-size: 2.5rem;
+    } */
+
+    .cards-container-a {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .card-a {
+      background: white;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      width: 300px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-a:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-a h2 {
+      color: #2d3748;
+      margin-bottom: 1rem;
+    }
+
+    .card-a p {
+      color: #4a5568;
+      margin-bottom: 1.5rem;
+    }
+
+    .button-a {
+      background: #4299e1;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.25rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.3s ease;
+    }
+
+    .button-a:hover {
+      background: #3182ce;
+    }
     </style>
 
   </head>
@@ -275,7 +341,31 @@
       </div>
   </div>
 
+  <div class="overlay">
+    <!-- <h1>Welcome to FinLearn</h1> -->
+    <div class="cards-container-a">
+      
+      
+      <div class="card-a"  onclick="window.location.href='beginner.html'">
+        <h2>I'm New to Finance</h2>
+        <p>Learn the fundamentals of finance through interactive lessons and games.</p>
+        <a href="#" class="button-a">Start Learning</a>
+      </div>
 
+      <div class="card-a"  onclick="window.location.href='basics.html'">
+        <h2>I Know Basics</h2>
+        <p>Take your financial knowledge to the next level with advanced concepts and strategies.</p>
+        <a href="#" class="button-a">Start Advanced Journey</a>
+      </div>
+
+      <!-- <div class="card"  onclick="window.location.href='basics.html'">
+        <h2>Financial Tracker</h2>
+        <p>Financial TrackerMonitor your expenses, track savings, and achieve your financial goals with ease.</p>
+        <a href="#" class="button">Start Tracking</a>
+      </div> -->
+
+    </div>
+  </div>
       <section>
         <div class="ai container three">
           <div class="content">
