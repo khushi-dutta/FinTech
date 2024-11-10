@@ -43,6 +43,51 @@
         opacity: 0;
       }
     }
+
+
+
+
+              .buttons button {
+            padding: 15px 30px;
+            margin-right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buttons button::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%) rotate(45deg);
+            transition: all 0.75s ease;
+            opacity: 0;
+        }
+
+        .buttons button:hover::before {
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+        }
+
+        .buttons button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.15);
+        }
+      
+
+      
     </style>
     <style>
       /* Fullscreen overlay for loader */
@@ -206,7 +251,7 @@
             <p>
               Take the first step towards a brighter financial future today.
             </p>
-            <button class="custom-btn btn">
+            <button class="custom-btn btn buttons">
               <a class="a1">Get Started</a>
             </button>
           </div>
