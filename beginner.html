@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Goals Platform</title>
+    <style>
+        /* General styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+        }
+
+        .top-bar {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            padding: 0.5rem 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .header {
+            background-color: #ffffff;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Progress bar styling */
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Video container styling */
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            width: calc(50% - 0.5rem); /* Two videos per row */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .video-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .video-placeholder {
+            background: #ddd;
+            width: 100%;
+            height: 200px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            border-radius: 4px;
+        }
+
+        .complete-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .complete-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        .complete-btn.completed {
+            background-color: #27ae60;
+        }
+
+        /* Pop-up styles */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            text-align: center;
+            display: none;
+        }
+
+        .popup img {
+            width: 150px;
+            margin-bottom: 1rem;
+        }
+
+        .popup .message {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .popup .close-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .popup .close-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div class="top-bar">
+        🎉 New courses added weekly! Start learning today! 🎉
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <div>🎓 Learning Goals</div>
+            <div> 🥇Coins: <span id="coinCount">0</span></div>
+        </div>
+    </header>
+
+    <div class="container" style="max-width: 800px; margin: 2rem auto;">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress" id="progressBar"></div>
+        </div>
+
+        <!-- Video List -->
+        <div id="videoList" class="video-container"></div>
+    </div>
+
+    <!-- Popup for completion message -->
+    <div class="popup" id="completionPopup">
+        <div class="message">Congratulations! You have successfully completed all the videos!</div>
+        <img src="https://via.placeholder.com/150?text=Coupon+Code" alt="Coupon Code">
+        <button class="close-btn" onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        const videos = [
+            { id: 1, title: "Introduction to HTML", coins: 10, completed: false },
+            { id: 2, title: "CSS Basics", coins: 15, completed: false },
+            { id: 3, title: "JavaScript Fundamentals", coins: 20, completed: false },
+            { id: 4, title: "Responsive Web Design", coins: 25, completed: false },
+            { id: 5, title: "Web Accessibility", coins: 30, completed: false },
+            { id: 6, title: "Git Basics", coins: 20, completed: false },
+            { id: 7, title: "React Introduction", coins: 35, completed: false },
+            { id: 8, title: "Node.js Basics", coins: 30, completed: false },
+            { id: 9, title: "Database Fundamentals", coins: 25, completed: false },
+            { id: 10, title: "API Development", coins: 40, completed: false }
+        ];
+
+        let totalCoins = 0;
+
+        function updateCoinCount() {
+            document.getElementById('coinCount').textContent = totalCoins;
+        }
+
+        function updateProgress() {
+            const completed = videos.filter(video => video.completed).length;
+            const progress = (completed / videos.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+
+        function triggerConfetti() {
+            confetti({
+                particleCount: 200,
+                spread: 70,
+                origin: { x: 0.5, y: 0.5 }
+            });
+        }
+
+        function completeVideo(videoId) {
+            const video = videos.find(v => v.id === videoId);
+            if (!video.completed) {
+                video.completed = true;
+                totalCoins += video.coins;
+                updateCoinCount();
+                updateProgress();
+
+                const button = document.querySelector(`[data-video-id="${videoId}"]`);
+                button.textContent = "Completed! ✓";
+                button.classList.add('completed');
+                button.disabled = true;
+
+                triggerConfetti();  // Trigger confetti animation
+
+                // Check if all videos are completed
+                if (videos.every(video => video.completed)) {
+                    showCompletionPopup();
+                }
+            }
+        }
+
+        function showCompletionPopup() {
+            const popup = document.getElementById('completionPopup');
+            popup.style.display = 'block';
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('completionPopup');
+            popup.style.display = 'none';
+        }
+
+        function createVideoCards() {
+            const videoList = document.getElementById('videoList');
+            videos.forEach(video => {
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card';
+                videoCard.innerHTML = `
+                    <h2 class="video-title">${video.title}</h2>
+                    <div class="video-placeholder">Video Placeholder</div>
+                    <p>Earn ${video.coins} coins by completing this lesson</p>
+                    <button 
+                        class="complete-btn" 
+                        data-video-id="${video.id}"
+                        onclick="completeVideo(${video.id})"
+                        ${video.completed ? 'disabled' : ''}>
+                        ${video.completed ? 'Completed! ✓' : 'Mark as Complete'}
+                    </button>
+                `;
+                videoList.appendChild(videoCard);
+            });
+        }
+
+        createVideoCards();
+        updateProgress();
+    </script>
+</body>
+</html>
