@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register & Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="login.css">
+    <script type="module" src="firebaseauth.js"></script>
+</head>
+<style>
+  .sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: #3498db;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: sparkle 0.6s ease-out forwards;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.8);
+  }
+
+  /* Sparkle animation */
+  @keyframes sparkle {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.1);
+      opacity: 0;
+    }
+  }
+
+
+        /* Fullscreen overlay for loader */
+        #loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    /* Loader circle with dollar sign */
+    .loader {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      border: 6px solid #3498db;
+      border-top: 6px solid #ffffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .loader:before {
+      content: "$";
+      position: absolute;
+      font-size: 2rem;
+      color: #3498db;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: bounce 0.5s alternate infinite ease-in-out;
+    }
+
+    /* Keyframe for spinning loader */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Keyframe for bouncing dollar sign */
+    @keyframes bounce {
+      from { transform: translate(-50%, -60%); }
+      to { transform: translate(-50%, -40%); }
+    }
+</style>
+<body>
+<div class="cursor-circle" id="cursor-circle"></div>
+  <!-- Loader overlay -->
+
+    <div class="container" id="signup" style="display:none;">
+      <h1 class="form-title">Register</h1>
+      <form method="post" action="">
+        <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
+        <div class="input-group">
+           <i class="fas fa-user"></i>
+           <input type="text"  id="fName" placeholder="First Name" required>
+           <label for="fname">First Name</label>
+        </div>
+        <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text"  id="lName" placeholder="Last Name" required>
+            <label for="lName">Last Name</label>
+        </div>
+        <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email"  id="rEmail" placeholder="Email" required>
+            <label for="rEmail">Email</label>
+        </div>
+        <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="rPassword"  placeholder="Password" required>
+            <label for="rPassword">Password</label>
+        </div>
+       <button class="btn" id="submitSignUp" >Sign Up</button>
+      </form>
+      <p class="or">
+        ----------or--------
+      </p>
+      <div class="icons">
+        <i class="fab fa-google"></i>
+        <i class="fab fa-facebook"></i>
+      </div>
+      <div class="links">
+        <p>Already Have Account ?</p>
+        <button id="signInButton">Sign In</button>
+      </div>
+    </div>
+
+  <div class="container" id="signIn">
+        <h1 class="form-title">Sign In</h1>
+        <form method="post" action="">
+          <div id="signInMessage" class="messageDiv" style="display:none;"></div>
+
+          <div class="input-group">
+              <i class="fas fa-envelope"></i>
+              <input type="email"  id="email" placeholder="Email" required>
+              <label for="email">Email</label>
+          </div>
+          <div class="input-group">
+              <i class="fas fa-lock"></i>
+            <input type="password" id="password"  placeholder="Password" required>
+              <label for="password">Password</label>
+          </div>
+          <p class="recover">
+            <a href="#">Recover Password</a>
+          </p>
+         <button  class="btn"  id="submitSignIn">Sign In</button>
+        </form>
+        <p class="or">
+          ----------or--------
+        </p>
+        <div class="icons">
+          <i class="fab fa-google"></i>
+          <i class="fab fa-facebook"></i>
+        </div>
+        <div class="links">
+          <p>Don't have account yet?</p>
+          <button id="signUpButton">Sign Up</button>
+        </div>
+      </div>
+      <script src="login.js"></script>
+      <script>
+        const cursorCircle = document.getElementById('cursor-circle');
+      
+        // Mouse move event to track cursor and create sparkles
+        document.addEventListener('mousemove', (e) => {
+          // Update circular cursor position
+          cursorCircle.style.left = `${e.pageX}px`;
+          cursorCircle.style.top = `${e.pageY}px`;
+      
+          // Create multiple sparkles around the cursor
+          createSparkle(e.pageX, e.pageY);
+          createSparkle(e.pageX + Math.random() * 20 - 10, e.pageY + Math.random() * 20 - 10);
+          createSparkle(e.pageX + Math.random() * 20 - 10, e.pageY + Math.random() * 20 - 10);
+        });
+      
+        function createSparkle(x, y) {
+          // Create a sparkle element
+          const sparkle = document.createElement('div');
+          sparkle.classList.add('sparkle');
+          sparkle.style.left = `${x}px`;
+          sparkle.style.top = `${y}px`;
+      
+          // Add sparkle to the document
+          document.body.appendChild(sparkle);
+      
+          // Remove the sparkle after animation ends
+          sparkle.addEventListener('animationend', () => {
+            sparkle.remove();
+          });
+        }
+      </script>
+</body>
+</html>
