@@ -144,8 +144,8 @@
     <nav class="navbar">
         <div class="logo">MyLogo</div>
         <div class="auth-buttons">
-            <button class="login-btn" onclick="redirectToLogin()">Login</button>
-            <button class="register-btn" onclick="redirectToRegister()">Register</button>
+            <button class="login-btn" onclick="redirectToLogin()" onclick="window.location.href='login/login.html'">Login</button>
+            <button class="register-btn" onclick="redirectToRegister()" onclick="window.location.href='login/login.html'">Register</button>
         </div>
     </nav>
 
@@ -164,15 +164,15 @@
     </div>
 
     <script>
-        function redirectToLogin() {
-            alert('Redirecting to login page...');
-            // Replace with actual link, e.g., window.location.href = "/login";
-        }
+        // function redirectToLogin() {
+        //     alert('Redirecting to login page...');
+        //     // Replace with actual link, e.g., window.location.href = "/login";
+        // }
 
-        function redirectToRegister() {
-            alert('Redirecting to register page...');
-            // Replace with actual link, e.g., window.location.href = "/register";
-        }
+        // function redirectToRegister() {
+        //     alert('Redirecting to register page...');
+        //     // Replace with actual link, e.g., window.location.href = "/register";
+        // }
 
         // JavaScript to implement the typing effect
         const heading = document.getElementById("animated-heading");
